@@ -77,6 +77,7 @@ namespace _443_FinalProject
                 {
                     case 0: break;
                     case 1:
+                        addPhotoPopUp.IsOpen = true; 
                         break;
                     case 2:
                         addVideoPopUp.IsOpen = true;
@@ -189,6 +190,22 @@ namespace _443_FinalProject
         private void cancelVideoButton_Click_1(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void addPhotoPopUp_Closed_1(object sender, object e)
+        {
+
+        }
+
+        private void uploadPhotoButton_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void capturePhoto_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PictureCapturePage));
+            addPhotoPopUp.IsOpen = false; 
         }
     }
 }

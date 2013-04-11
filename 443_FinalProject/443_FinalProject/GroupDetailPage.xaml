@@ -132,6 +132,27 @@
             </Grid>
         </Popup>
 
+        <Popup x:Name="addPhotoPopUp" IsOpen="False" Closed="addPhotoPopUp_Closed_1" Height="Auto" Width="Auto" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Width="400" Height="200" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".5*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel Orientation="Vertical" Grid.Column="0" Margin="10">
+                    <Button x:Name="uploadPhotoButton" Margin="20" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Upload photo" HorizontalAlignment="Center" Click="uploadPhotoButton_Click_1"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10">
+                    <Button x:Name="capturePhoto" Margin="20" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Capture photo" HorizontalAlignment="Center" Click="capturePhoto_Click_1"/>
+
+                </StackPanel>
+
+                <Button x:Name="cancelPhotoButton" Margin="20" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Cancel" HorizontalAlignment="Center" Click="cancelVideoButton_Click_1"/>
+            </Grid>
+        </Popup>
+
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
