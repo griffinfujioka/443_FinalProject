@@ -102,7 +102,7 @@ namespace _443_FinalProject
             filePicker.ViewMode = PickerViewMode.Thumbnail;
             filePicker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
             filePicker.SettingsIdentifier = "picker1";
-            filePicker.CommitButtonText = "Open File to Process";
+            filePicker.CommitButtonText = "Import video";
 
             var file = await filePicker.PickSingleFileAsync(); 
 
@@ -197,9 +197,62 @@ namespace _443_FinalProject
 
         }
 
-        private void uploadPhotoButton_Click_1(object sender, RoutedEventArgs e)
+        private async void uploadPhotoButton_Click_1(object sender, RoutedEventArgs e)
         {
+            addPhotoPopUp.IsOpen = false; 
+            var filePicker = new FileOpenPicker();
+            filePicker.FileTypeFilter.Add(".jpg");
+            filePicker.FileTypeFilter.Add(".jpeg");
+            filePicker.FileTypeFilter.Add(".png"); 
+            filePicker.ViewMode = PickerViewMode.Thumbnail;
+            filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            filePicker.SettingsIdentifier = "picker1";
+            filePicker.CommitButtonText = "Import picture";
 
+            var file = await filePicker.PickSingleFileAsync();
+
+            StorageFile videoFile, imageFile;
+            BitmapImage videoImage;
+            String PHOTO_FILE_NAME = "Archive Temp Photo.jpg";
+
+            // If the video file isn't null: 
+            if (file != null)
+            {
+
+                videoFile = file;
+                // Get thumbnail of the video file 
+                var thumb = await videoFile.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.PicturesView, 1000, Windows.Storage.FileProperties.ThumbnailOptions.UseCurrentScale);
+
+                // Create a Buffer object to hold raw picture data
+                var buffer = new Windows.Storage.Streams.Buffer(Convert.ToUInt32(thumb.Size));
+
+                // Read the raw picture data into the Buffer object 
+                await thumb.ReadAsync(buffer, Convert.ToUInt32(thumb.Size), InputStreamOptions.None);
+
+                // Open LocalFolder
+                var folder = ApplicationData.Current.LocalFolder;
+
+                // Create (or open if one exists) a folder called temp images
+                folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
+
+                // Create a StorageFile 
+                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+
+                // Write picture data to the file 
+                await FileIO.WriteBufferAsync(imageFile, buffer);
+
+                // Preview the image
+                var bmpimg = new BitmapImage();
+                bmpimg.SetSource(thumb);
+                videoImage = bmpimg;
+
+                var newVideoItem = new SampleDataItem("", videoFile.Name, "", imageFile.Path, "", "", App.currentGroup);
+
+                App.currentGroup.Items.Add(newVideoItem);
+
+                this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)App.currentGroup).UniqueId);
+
+            }
         }
 
         private void capturePhoto_Click_1(object sender, RoutedEventArgs e)
