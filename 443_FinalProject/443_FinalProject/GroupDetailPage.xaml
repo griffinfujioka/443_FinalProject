@@ -100,14 +100,17 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" IsHitTestVisible="false" Margin="0,0,278,40"/>
-            <StackPanel Orientation="Horizontal" Margin="40,40,40,40" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3">
-                <ComboBox x:Name="addContentComboBox" DropDownClosed="addContentComboBox_DropDownClosed_1" Height="Auto" Width="200" SelectedIndex="0" SelectionChanged="addContentComboBox_SelectionChanged_1">
+            <StackPanel Orientation="Horizontal" Margin="40,20,40,20" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3">
+                <Button x:Name="shareBtn" Style="{StaticResource PeopleAppBarButtonStyle}" Tag="Share"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="shareBtn_Click_1"/>
+                <ComboBox x:Name="addContentComboBox" DropDownClosed="addContentComboBox_DropDownClosed_1" MinHeight="40" MaxHeight="400" Width="200" SelectedIndex="0" SelectionChanged="addContentComboBox_SelectionChanged_1">
                     <x:String>Add content</x:String>
                     <x:String>Picture(s)</x:String>
                     <x:String>Video</x:String>
                     <x:String>Text</x:String>
                     
                 </ComboBox>
+
+                
             </StackPanel>
         </Grid>
         
@@ -151,6 +154,30 @@
 
                 <Button x:Name="cancelPhotoButton" Margin="20" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Cancel" HorizontalAlignment="Center" Click="cancelVideoButton_Click_1"/>
             </Grid>
+        </Popup>
+
+        <Popup x:Name="shareTimelinePopup" IsOpen="False" Height="Auto" Width="Auto" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border BorderBrush="DarkGray" BorderThickness="10">
+                <Grid Background="White" Height="350" Width="400">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock FontFamily="Segoe UI" FontSize="24" Text="Share Timeline" Foreground="Black" Margin="10"/>
+                        <TextBlock FontFamily="Segoe UI" FontSize="16" Text="Enter recipient e-mail addresses: " Foreground="Black" Margin="10,10,10,5"/>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="recipientEmailTxtBox" Foreground="Black" Background="Gray" Width="300" Height="30" KeyDown="recipientEmailTxtBox_KeyDown_1" Margin="10,5,10,10" HorizontalAlignment="Left"/>
+                            <Button x:Name="addRecipientButton" Content="Add" Foreground="Black" Background="Gray" Width="70" Height="40" Click="addRecipientButton_Click_1"/>
+
+                        </StackPanel>
+                       
+                        <ListBox x:Name="recipientsListBox" Foreground="Black" Margin="10" Height="120" Width="300"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="shareButton" Content="Share" Width="100" Height="40" Foreground="Black" Background="Gray" Click="shareButton_Click_1"/>
+                            <Button x:Name="cancelButton" Content="Cancel" Width="100" Height="40" Foreground="Black" Background="Gray" Click="cancelButton_Click_1"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                
+            </Border>
         </Popup>
 
         <VisualStateManager.VisualStateGroups>

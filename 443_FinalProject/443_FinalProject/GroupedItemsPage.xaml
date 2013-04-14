@@ -129,11 +129,20 @@
         </Grid>
         
         <StackPanel Orientation="Horizontal" Margin="20,20,20,20" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button x:Name="newEntryButton" Content="New Entry" BorderThickness="0" Margin="10,10,10,10" Click="newEntryButton_Click"/>
+            <ComboBox x:Name="addContentComboBox" DropDownClosed="addContentComboBox_DropDownClosed_1" MaxHeight="500" Height="35" Width="200" SelectedIndex="0" >
+                <x:String>Add content</x:String>
+                <x:String>Picture(s)</x:String>
+                <x:String>Video</x:String>
+                <x:String>Text</x:String>
+
+            </ComboBox>
+            <!--<Button x:Name="newEntryButton" Content="New Entry" BorderThickness="0" Margin="10,10,10,10" Click="newEntryButton_Click"/>-->
             <Button x:Name="newTimelineButton" Content="New Timeline" BorderThickness="0" Margin="10,10,10,10" Click="newTimelineButton_Click_1"/>
         </StackPanel>
         
         <Popup x:Name="newTimelinePopup" Visibility="Collapsed" Height="300" Width="310" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center">
+            <Border BorderBrush="DarkGray" BorderThickness="10">
+            
             <StackPanel Orientation="Vertical" Background="White" Height="300" Width="310">
                 <TextBlock Text="New timeline" FontFamily="Segoe UI" FontSize="16" Foreground="Black" Margin="10"/>
 
@@ -154,8 +163,73 @@
                 </StackPanel>
 
             </StackPanel>
-            
+            </Border>
         </Popup>
+
+        <Popup x:Name="addVideoPopUp" IsOpen="False" Closed="addVideoPopUp_Closed_1" Height="Auto" Width="Auto" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Width="400" Height="200" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".5*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel Orientation="Vertical" Grid.Column="0" Margin="10">
+                    <Button x:Name="uploadVideoButton" Margin="20" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Upload video" HorizontalAlignment="Center" Click="uploadVideoButton_Click_1"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10">
+                    <Button x:Name="captureVideoButton" Margin="20" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Capture video" HorizontalAlignment="Center" Click="captureVideoButton_Click_1"/>
+
+                </StackPanel>
+
+                <Button x:Name="cancelVideoButton" Margin="20" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Cancel" HorizontalAlignment="Center" Click="cancelVideoButton_Click_1"/>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="addPhotoPopUp" IsOpen="False" Closed="addPhotoPopUp_Closed_1" Height="Auto" Width="Auto" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Width="400" Height="200" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width=".5*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel Orientation="Vertical" Grid.Column="0" Margin="10">
+                    <Button x:Name="uploadPhotoButton" Margin="20" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Upload photo" HorizontalAlignment="Center" Click="uploadPhotoButton_Click_1"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10">
+                    <Button x:Name="capturePhoto" Margin="20" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Capture photo" HorizontalAlignment="Center" Click="capturePhoto_Click_2"/>
+
+                </StackPanel>
+
+                <Button x:Name="cancelPhotoButton" Margin="20" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Foreground="Black" Background="Gray" Width="160" Height="40" Content="Cancel" HorizontalAlignment="Center" Click="cancelPhotoButton_Click_1"/>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="selectTimelinePopup" Visibility="Visible" IsOpen="False" AllowDrop="False" HorizontalAlignment="Left" Margin="500,10,0,10" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
+            <Grid Height="Auto" Width="400" Background="White">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Select timeline" FontSize="28" HorizontalAlignment="Left" Margin="10,5,10,10" Foreground="Black"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".65*"/>
+                            <ColumnDefinition Width=".35*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="timelineComboBox" DropDownClosed="timelineComboBox_DropDownClosed_1" Width="200" MaxHeight="200" Height="30" HorizontalAlignment="Left" Margin="10,10,10,10">
+
+                        </ComboBox>
+
+                        <StackPanel Orientation="Vertical" Grid.Column="1">
+                            <Button Content="Add" Height="Auto" Width="100" Foreground="Black" HorizontalAlignment="Center" Margin="5,10,5,10"  Click="Add_Button_Click_1"/>
+                            <Button Content="Cancel" Height="Auto" Width="100" Foreground="Black" HorizontalAlignment="Center" Margin="5,10,5,10"  Click="Cancel_Button_Click_1"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
 
         <VisualStateManager.VisualStateGroups>
 

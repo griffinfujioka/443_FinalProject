@@ -1,17 +1,21 @@
 ﻿using _443_FinalProject.Data;
-
+using _443_FinalProject.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
@@ -23,6 +27,12 @@ namespace _443_FinalProject
     /// </summary>
     public sealed partial class GroupedItemsPage : _443_FinalProject.Common.LayoutAwarePage
     {
+
+
+        StorageFile videoFile, imageFile;
+        BitmapImage videoImage;
+        String PHOTO_FILE_NAME = "Archive Temp Photo.jpg";
+
         public GroupedItemsPage()
         {
             this.InitializeComponent();
@@ -115,6 +125,232 @@ namespace _443_FinalProject
             {
                 submitTimelineButton_Click_1(sender, e); 
             }
+        }
+
+        private void addContentComboBox_DropDownClosed_1(object sender, object e)
+        {
+            try
+            {
+
+
+                switch (addContentComboBox.SelectedIndex)
+                {
+                    case 0: break;
+                    case 1:
+                        addPhotoPopUp.IsOpen = true;
+                        break;
+                    case 2:
+                        addVideoPopUp.IsOpen = true;
+                        break;
+                    case 3:
+                        this.Frame.Navigate(typeof(NewTextEntryPage));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private async void uploadPhotoButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            addPhotoPopUp.IsOpen = false;
+            var filePicker = new FileOpenPicker();
+            filePicker.FileTypeFilter.Add(".jpg");
+            filePicker.FileTypeFilter.Add(".jpeg");
+            filePicker.FileTypeFilter.Add(".png");
+            filePicker.ViewMode = PickerViewMode.Thumbnail;
+            filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            filePicker.SettingsIdentifier = "picker1";
+            filePicker.CommitButtonText = "Import picture";
+
+            var file = await filePicker.PickSingleFileAsync();
+
+
+            // If the video file isn't null: 
+            if (file != null)
+            {
+
+                videoFile = file;
+                // Get thumbnail of the video file 
+                var thumb = await videoFile.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.PicturesView, 1000, Windows.Storage.FileProperties.ThumbnailOptions.UseCurrentScale);
+
+                // Create a Buffer object to hold raw picture data
+                var buffer = new Windows.Storage.Streams.Buffer(Convert.ToUInt32(thumb.Size));
+
+                // Read the raw picture data into the Buffer object 
+                await thumb.ReadAsync(buffer, Convert.ToUInt32(thumb.Size), InputStreamOptions.None);
+
+                // Open LocalFolder
+                var folder = ApplicationData.Current.LocalFolder;
+
+                // Create (or open if one exists) a folder called temp images
+                folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
+
+                // Create a StorageFile 
+                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+
+                // Write picture data to the file 
+                await FileIO.WriteBufferAsync(imageFile, buffer);
+
+                // Preview the image
+                var bmpimg = new BitmapImage();
+                bmpimg.SetSource(thumb);
+                videoImage = bmpimg;
+
+                var newVideoItem = new SampleDataItem("", videoFile.Name, "", imageFile.Path, "", "", App.currentGroup);
+
+                App.currentGroup.Items.Add(newVideoItem);
+
+                this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)App.currentGroup).UniqueId);
+
+            }
+        }
+
+        private void capturePhoto_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PictureCapturePage));
+            addPhotoPopUp.IsOpen = false;
+        }
+
+        private void addPhotoPopUp_Closed_1(object sender, object e)
+        {
+
+        }
+
+        private void addVideoPopUp_Closed_1(object sender, object e)
+        {
+
+        }
+
+        private void cancelPhotoButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            addVideoPopUp.IsOpen = false;
+            addPhotoPopUp.IsOpen = false; 
+        }
+
+        private void capturePhoto_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PictureCapturePage));
+            addPhotoPopUp.IsOpen = false;
+        }
+
+
+
+        private async void uploadVideoButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            addVideoPopUp.IsOpen = false;
+            var filePicker = new FileOpenPicker();
+            filePicker.FileTypeFilter.Add(".mp4");
+            filePicker.ViewMode = PickerViewMode.Thumbnail;
+            filePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            filePicker.SettingsIdentifier = "picker1";
+            filePicker.CommitButtonText = "Import video";
+
+            var file = await filePicker.PickSingleFileAsync();
+
+            // If the video file isn't null: 
+            if (file != null)
+            {
+
+                videoFile = file;
+                // Get thumbnail of the video file 
+                var thumb = await videoFile.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.PicturesView, 1000, Windows.Storage.FileProperties.ThumbnailOptions.UseCurrentScale);
+
+                // Create a Buffer object to hold raw picture data
+                var buffer = new Windows.Storage.Streams.Buffer(Convert.ToUInt32(thumb.Size));
+
+                // Read the raw picture data into the Buffer object 
+                await thumb.ReadAsync(buffer, Convert.ToUInt32(thumb.Size), InputStreamOptions.None);
+
+                // Open LocalFolder
+                var folder = ApplicationData.Current.LocalFolder;
+
+                // Create (or open if one exists) a folder called temp images
+                folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
+
+                // Create a StorageFile 
+                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+
+                // Write picture data to the file 
+                await FileIO.WriteBufferAsync(imageFile, buffer);
+
+                // Preview the image
+                var bmpimg = new BitmapImage();
+                bmpimg.SetSource(thumb);
+                videoImage = bmpimg;
+
+                if (App.currentGroup == null)       // We need the user to select which timeline to put the item in 
+                {
+                    selectTimelinePopup.IsOpen = true;
+                    // Add all of the available timelines to the combobox
+
+
+                    foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+                    {
+                        timelineComboBox.Items.Insert(0, group.Title.ToString());
+                    }
+                    timelineComboBox.Items.Insert(0, "New timeline");
+                    timelineComboBox.SelectedIndex = 0;
+
+                    return;
+                }
+
+                var newVideoItem = new SampleDataItem("", videoFile.Name, "", imageFile.Path, "", "", App.currentGroup);
+
+                App.currentGroup.Items.Add(newVideoItem);
+
+                this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)App.currentGroup).UniqueId);
+
+            }
+        }
+
+        private void captureVideoButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(VideoCapturePage));
+            addVideoPopUp.IsOpen = false; 
+        }
+
+        private void cancelVideoButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            addVideoPopUp.IsOpen = false; 
+        }
+
+        private void timelineComboBox_DropDownClosed_1(object sender, object e)
+        {
+            foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+            {
+                if (group.Title == timelineComboBox.SelectedItem.ToString())
+                    App.currentGroup = group;
+            }
+        }
+
+        private async void Add_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (App.currentGroup == null)           //  The user didn't pick anything 
+            {
+                // Add a new timeline
+                Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog("Please select a timeline.");
+                await dialog.ShowAsync();
+                return;
+            }
+
+            selectTimelinePopup.IsOpen = false;
+           
+            var newVideoItem = new SampleDataItem("", imageFile.Name, "", imageFile.Path, "", "", App.currentGroup);
+            App.currentGroup.Items.Add(newVideoItem);
+
+            this.Frame.Navigate(typeof(GroupDetailPage), App.currentGroup.UniqueId);
+
+
+        }
+
+        private void Cancel_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            selectTimelinePopup.IsOpen = false;
         }
     }
 }

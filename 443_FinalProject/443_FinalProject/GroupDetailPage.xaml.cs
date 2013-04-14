@@ -29,9 +29,12 @@ namespace _443_FinalProject
     /// </summary>
     public sealed partial class GroupDetailPage : _443_FinalProject.Common.LayoutAwarePage
     {
+        int eventCounter;       // This is a hack to fix this weird bug... 
+
         public GroupDetailPage()
         {
             this.InitializeComponent();
+            eventCounter = 0; 
         }
 
         /// <summary>
@@ -171,11 +174,13 @@ namespace _443_FinalProject
                 {
                     case 0: break;
                     case 1:
+                        addPhotoPopUp.IsOpen = true;
                         break;
                     case 2:
                         addVideoPopUp.IsOpen = true;
                         break;
                     case 3:
+                        this.Frame.Navigate(typeof(NewTextEntryPage)); 
                         break;
                     default:
                         break;
@@ -189,7 +194,8 @@ namespace _443_FinalProject
 
         private void cancelVideoButton_Click_1(object sender, RoutedEventArgs e)
         {
-
+            addPhotoPopUp.IsOpen = false;
+            addVideoPopUp.IsOpen = false; 
         }
 
         private void addPhotoPopUp_Closed_1(object sender, object e)
@@ -208,6 +214,7 @@ namespace _443_FinalProject
             filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             filePicker.SettingsIdentifier = "picker1";
             filePicker.CommitButtonText = "Import picture";
+
 
             var file = await filePicker.PickSingleFileAsync();
 
@@ -259,6 +266,67 @@ namespace _443_FinalProject
         {
             this.Frame.Navigate(typeof(PictureCapturePage));
             addPhotoPopUp.IsOpen = false; 
+        }
+
+        private void shareBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            shareTimelinePopup.IsOpen = true; 
+        }
+
+        private async void shareButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            var output = string.Format("Your timeline has been shared.");
+            Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog(output);
+            await dialog.ShowAsync();
+
+            shareTimelinePopup.IsOpen = false;
+        }
+
+        private void cancelButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            shareTimelinePopup.IsOpen = false; 
+
+        }
+
+        private void recipientEmailTxtBox_KeyDown_1(object sender, KeyRoutedEventArgs e)
+        {
+            
+
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                
+                if(eventCounter % 2 == 0)
+                {
+                    eventCounter++;
+                    var newRecipient = recipientEmailTxtBox.Text;
+                    var newListBoxItem = new ListBoxItem();
+                    newListBoxItem.Content = newRecipient;
+                    recipientsListBox.Items.Add(newListBoxItem);
+                    recipientEmailTxtBox.Text = "";
+                    
+                }
+                else
+                    eventCounter++;
+
+            }
+
+            
+        }
+
+        private void addRecipientButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (eventCounter % 2 == 0)
+            {
+                eventCounter++;
+                var newRecipient = recipientEmailTxtBox.Text;
+                var newListBoxItem = new ListBoxItem();
+                newListBoxItem.Content = newRecipient;
+                recipientsListBox.Items.Add(newListBoxItem);
+                recipientEmailTxtBox.Text = "";
+
+            }
+            else
+                eventCounter++;
         }
     }
 }

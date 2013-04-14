@@ -128,8 +128,24 @@ namespace _443_FinalProject.Pages
             video_metadataPopup.IsOpen = false;
             var videoTitle = titleTxtBox.Text;
             var videoDescription = descriptionTxtBox.Text;
-            var newVideoItem = new SampleDataItem("", videoTitle, "", imageFile.Path, videoDescription, "", App.currentGroup);
+            
 
+            if (App.currentGroup == null)       // We need the user to select which timeline to put the item in 
+            {
+                selectTimelinePopup.IsOpen = true;
+                // Add all of the available timelines to the combobox
+
+
+                foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+                {
+                    timelineComboBox.Items.Insert(0, group.Title.ToString());
+                }
+                timelineComboBox.Items.Insert(0, "New timeline");
+                timelineComboBox.SelectedIndex = 0;
+                
+                return;
+            }
+            var newVideoItem = new SampleDataItem("", videoTitle, "", imageFile.Path, videoDescription, "", App.currentGroup);
             App.currentGroup.Items.Add(newVideoItem);
 
             this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)App.currentGroup).UniqueId); 
@@ -138,6 +154,42 @@ namespace _443_FinalProject.Pages
         private void cancelUploadButton_Click_1(object sender, RoutedEventArgs e)
         {
             video_metadataPopup.IsOpen = false; 
+        }
+
+        private void timelineComboBox_DropDownClosed_1(object sender, object e)
+        {
+            foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+            {
+                if (group.Title == timelineComboBox.SelectedItem.ToString())
+                    App.currentGroup = group;
+            }
+        }
+
+        private async void Add_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (App.currentGroup == null)           //  The user didn't pick anything 
+            {
+                // Add a new timeline
+                Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog("Please select a timeline.");
+                await dialog.ShowAsync();
+                return;
+            }
+
+            selectTimelinePopup.IsOpen = false;
+            video_metadataPopup.IsOpen = false;
+            var videoTitle = titleTxtBox.Text;
+            var videoDescription = descriptionTxtBox.Text;
+            var newVideoItem = new SampleDataItem("", videoTitle, "", imageFile.Path, videoDescription, "", App.currentGroup);
+            App.currentGroup.Items.Add(newVideoItem); 
+
+            this.Frame.Navigate(typeof(GroupDetailPage), App.currentGroup.UniqueId);
+
+
+        }
+
+        private void Cancel_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            selectTimelinePopup.IsOpen = false;
         }
     }
 }

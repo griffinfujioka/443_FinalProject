@@ -77,7 +77,7 @@ namespace _443_FinalProject.Pages
             {
                 // Open up the camera 
                 CameraCaptureUI dialog = new CameraCaptureUI();
-                dialog.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg; 
+                dialog.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
 
                 // Capture a video file 
                 StorageFile file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
@@ -121,23 +121,74 @@ namespace _443_FinalProject.Pages
             }
 
         }
-        #endregion 
+        #endregion
 
         private void submitPhotoButton_Click_1(object sender, RoutedEventArgs e)
         {
-            photo_metadataPopup.IsOpen = false; 
+            photo_metadataPopup.IsOpen = false;
             var photoTitle = titleTxtBox.Text;
             var photoDescription = descriptionTxtBox.Text;
-            var newPhoto = new SampleDataItem("", photoTitle, "", imageFile.Path, photoDescription, "", App.currentGroup);
+            
 
+            if (App.currentGroup == null)       // We need the user to select which timeline to put the item in 
+            {
+                selectTimelinePopup.IsOpen = true;
+                // Add all of the available timelines to the combobox
+
+                
+                foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+                {
+                    timelineComboBox.Items.Insert(0, group.Title.ToString());
+                }
+                timelineComboBox.Items.Insert(0, "New timeline");
+                timelineComboBox.SelectedIndex = 0;
+                return;
+            }
+
+            var newPhoto = new SampleDataItem("", photoTitle, "", imageFile.Path, photoDescription, "", App.currentGroup);
             App.currentGroup.Items.Add(newPhoto);
 
-            this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)App.currentGroup).UniqueId); 
+            this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)App.currentGroup).UniqueId);
         }
 
         private void cancelUploadButton_Click_1(object sender, RoutedEventArgs e)
         {
-            photo_metadataPopup.IsOpen = false; 
+            photo_metadataPopup.IsOpen = false;
+        }
+
+        private void timelineComboBox_DropDownClosed_1(object sender, object e)
+        {
+            foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+            {
+                if (group.Title == timelineComboBox.SelectedItem.ToString())
+                    App.currentGroup = group;
+            }
+        }
+
+        private async void Add_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (App.currentGroup == null)           //  The user didn't pick anything 
+            {
+                // Add a new timeline
+                Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog("Please select a timeline.");
+                await dialog.ShowAsync();
+                return;
+            }
+
+            selectTimelinePopup.IsOpen = false;
+            var photoTitle = titleTxtBox.Text;
+            var photoDescription = descriptionTxtBox.Text;
+            var newPhoto = new SampleDataItem("", photoTitle, "", imageFile.Path, photoDescription, "", App.currentGroup);
+            App.currentGroup.Items.Add(newPhoto);
+
+            this.Frame.Navigate(typeof(GroupDetailPage), App.currentGroup.UniqueId);
+
+
+        }
+
+        private void Cancel_Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            selectTimelinePopup.IsOpen = false;
         }
     }
 }

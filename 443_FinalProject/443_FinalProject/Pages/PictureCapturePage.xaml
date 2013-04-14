@@ -68,6 +68,30 @@
                 </StackPanel>
             </Grid>
         </Popup>
+
+        <Popup x:Name="selectTimelinePopup" Visibility="Visible" IsOpen="False" AllowDrop="False" HorizontalAlignment="Left" Margin="500,10,0,10" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
+            <Grid Height="Auto" Width="400" Background="White">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Select timeline" FontSize="28" HorizontalAlignment="Left" Margin="10,5,10,10" Foreground="Black"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".65*"/>
+                            <ColumnDefinition Width=".35*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="timelineComboBox" DropDownClosed="timelineComboBox_DropDownClosed_1" Width="200" MaxHeight="200" Height="30" HorizontalAlignment="Left" Margin="10,10,10,10">
+                            
+                        </ComboBox>
+                        
+                        <StackPanel Orientation="Vertical" Grid.Column="1">
+                            <Button Content="Add" Height="Auto" Width="100" Foreground="Black" HorizontalAlignment="Center" Margin="5,10,5,10"  Click="Add_Button_Click_1"/>
+                            <Button Content="Cancel" Height="Auto" Width="100" Foreground="Black" HorizontalAlignment="Center" Margin="5,10,5,10"  Click="Cancel_Button_Click_1"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+
         <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>

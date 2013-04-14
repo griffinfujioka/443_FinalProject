@@ -115,6 +115,9 @@
     <Compile Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\NewTextEntryPage.xaml.cs">
+      <DependentUpon>NewTextEntryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PictureCapturePage.xaml.cs">
       <DependentUpon>PictureCapturePage.xaml</DependentUpon>
     </Compile>
@@ -175,6 +178,10 @@
     <Page Include="ItemDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\NewTextEntryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PictureCapturePage.xaml">
       <SubType>Designer</SubType>

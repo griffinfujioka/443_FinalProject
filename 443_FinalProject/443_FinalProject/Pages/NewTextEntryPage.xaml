@@ -1,6 +1,6 @@
 ﻿<common:LayoutAwarePage
     x:Name="pageRoot"
-    x:Class="_443_FinalProject.Pages.VideoCapturePage"
+    x:Class="_443_FinalProject.Pages.NewTextEntryPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -25,50 +25,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
-
-        <!-- Video Metadata Popup -->
-        <Popup x:Name="video_metadataPopup" Visibility="Visible" AllowDrop="False" HorizontalAlignment="Left" Margin="500,10,0,10" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
-            <Grid Height="Auto" Width="400" Background="White">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Video Details" FontSize="28" HorizontalAlignment="Left" Margin="10,5,10,10" Foreground="Black"/>
-                    <TextBlock Text="Title:" FontSize="16" HorizontalAlignment="Left" Margin="10,5,10,5" Foreground="Black" Height="24" Width="47"  />
-                    <TextBox x:Name="titleTxtBox" Width="381" Height="20" AcceptsReturn="False" Foreground="Black" Margin="10,0,10,5" Background="Gray" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Description:" FontSize="16" HorizontalAlignment="Left" Margin="10,5,10,5" Foreground="Black" Height="24" Width="101"  />
-                    <TextBox x:Name="descriptionTxtBox" Width="380" Height="180" HorizontalAlignment="Left" AcceptsReturn="True" TextWrapping="Wrap" Foreground="Black" Background="Gray" Margin="10,0,10,5"/>
-                    <!--<TextBlock Text="Tags:" FontSize="16" HorizontalAlignment="Left" Margin="10,5,10,5" Foreground="Black"/>
-                    
-                    
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="tagTxtBox" Height="40" Width="278" Foreground="Black" Margin="10,5,1,5" Background="Gray" HorizontalAlignment="Left" KeyUp="tagTxtBox_KeyUp_1" />
-                        <Button x:Name="addTagBtn" Content="Add" Height="40" Width="100" FontSize="16" Margin="1,5,10,5" BorderThickness="0" HorizontalAlignment="Left" IsTabStop="True" Foreground="Black" Background="Gray" Click="addTagBtn_Click"/>
-                    </StackPanel>
-                    
-                    
-                    <StackPanel Height="50">
-                        <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="10,0,10,8" Height="50">
-                            <TextBlock x:Name="tagsTxtBlock"  FontSize="14" Width="380" Foreground="Black" TextWrapping="Wrap"/>
-                        </ScrollViewer>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="privacyComboBox" HorizontalAlignment="Left" Margin="10,5,10,5" Width="250" SelectionChanged="privacyComboBox_SelectionChanged_1">
-                            <ComboBoxItem>Private (default)</ComboBoxItem>
-                            <ComboBoxItem>Public</ComboBoxItem>
-                        </ComboBox>
-
-                    </StackPanel>
-
-                    <TextBlock x:Name="locationTxtBlock" FontFamily="Segoe UI" FontSize="14" Foreground="Black" Width="380" HorizontalAlignment="Left" Height="30" Margin="20,5,10,5"/>
-                    -->
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="submit_videoBtn" Content="OK" Height="35" Width="100" FontSize="16" Margin="10,5,10,5" BorderThickness="0" HorizontalAlignment="Left" IsTabStop="True" Foreground="Black" Background="Gray" Click="submit_videoBtn_Click_1"/>
-                        <Button x:Name="cancelUploadButton" Content="Cancel" Height="35" Width="100" FontSize="16" Margin="10,5,10,5" BorderThickness="0" HorizontalAlignment="Left" IsTabStop="True" Foreground="Black" Background="Gray" Click="cancelUploadButton_Click_1"/>
-                    </StackPanel>
-
-                </StackPanel>
-            </Grid>
-        </Popup>
 
         <!-- Back button and page title -->
         <Grid>
@@ -77,7 +35,19 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="New text entry" Style="{StaticResource PageHeaderTextStyle}" Tapped="pageTitle_Tapped_1"/>
             
+        </Grid>
+        
+        <Grid Grid.Row="1" Margin="40,10,40,10">
+           
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Title: " FontSize="24" Margin="20"/>
+                <TextBox x:Name="textTitleTxtBox" Grid.Column="1" FontSize="40" Height="70" Width="1000" Margin="40,10,40,10" HorizontalAlignment="Left"/>
+                <TextBlock Text="Description: " FontSize="24" Margin="20"/>
+                <TextBox x:Name="descriptionTxtBox" Margin="40, 5,20,20" Width="800" Height="300" FontSize="18" HorizontalAlignment="Left" />
+                
+            </StackPanel>
         </Grid>
 
         <Popup x:Name="selectTimelinePopup" Visibility="Visible" IsOpen="False" AllowDrop="False" HorizontalAlignment="Left" Margin="500,10,0,10" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
@@ -101,6 +71,12 @@
                 </StackPanel>
             </Grid>
         </Popup>
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="saveTextEntry" Style="{StaticResource SaveAppBarButtonStyle}" Tag="Video" HorizontalAlignment="Center" Click="saveTextEntry_Click_1"/>
+            </StackPanel>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
 
