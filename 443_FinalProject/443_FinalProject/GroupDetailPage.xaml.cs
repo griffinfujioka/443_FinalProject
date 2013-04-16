@@ -30,6 +30,9 @@ namespace _443_FinalProject
     public sealed partial class GroupDetailPage : _443_FinalProject.Common.LayoutAwarePage
     {
         int eventCounter;       // This is a hack to fix this weird bug... 
+        StorageFile videoFile, imageFile;
+        BitmapImage videoImage;
+        String PHOTO_FILE_NAME = "Archive Temp Photo.jpg";
 
         public GroupDetailPage()
         {
@@ -109,9 +112,7 @@ namespace _443_FinalProject
 
             var file = await filePicker.PickSingleFileAsync(); 
 
-            StorageFile videoFile, imageFile; 
-            BitmapImage videoImage; 
-            String PHOTO_FILE_NAME = "Archive Temp Photo.jpg";
+            
 
              // If the video file isn't null: 
                 if (file != null)
@@ -134,7 +135,7 @@ namespace _443_FinalProject
                     folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
 
                     // Create a StorageFile 
-                    imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+                    imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.GenerateUniqueName);
 
                     // Write picture data to the file 
                     await FileIO.WriteBufferAsync(imageFile, buffer);
@@ -218,9 +219,6 @@ namespace _443_FinalProject
 
             var file = await filePicker.PickSingleFileAsync();
 
-            StorageFile videoFile, imageFile;
-            BitmapImage videoImage;
-            String PHOTO_FILE_NAME = "Archive Temp Photo.jpg";
 
             // If the video file isn't null: 
             if (file != null)
@@ -243,7 +241,7 @@ namespace _443_FinalProject
                 folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
 
                 // Create a StorageFile 
-                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.GenerateUniqueName);
 
                 // Write picture data to the file 
                 await FileIO.WriteBufferAsync(imageFile, buffer);

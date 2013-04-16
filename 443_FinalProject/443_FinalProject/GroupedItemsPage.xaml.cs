@@ -191,7 +191,7 @@ namespace _443_FinalProject
                 folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
 
                 // Create a StorageFile 
-                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.GenerateUniqueName);
 
                 // Write picture data to the file 
                 await FileIO.WriteBufferAsync(imageFile, buffer);
@@ -273,7 +273,7 @@ namespace _443_FinalProject
                 folder = await folder.CreateFolderAsync("temp images", CreationCollisionOption.OpenIfExists);
 
                 // Create a StorageFile 
-                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.ReplaceExisting);
+                imageFile = await folder.CreateFileAsync(PHOTO_FILE_NAME, CreationCollisionOption.GenerateUniqueName);
 
                 // Write picture data to the file 
                 await FileIO.WriteBufferAsync(imageFile, buffer);

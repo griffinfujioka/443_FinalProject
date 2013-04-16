@@ -101,8 +101,8 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" IsHitTestVisible="false" Margin="0,0,278,40"/>
             <StackPanel Orientation="Horizontal" Margin="40,20,40,20" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3">
-                <Button x:Name="shareBtn" Style="{StaticResource PeopleAppBarButtonStyle}" Tag="Share"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="shareBtn_Click_1"/>
-                <ComboBox x:Name="addContentComboBox" DropDownClosed="addContentComboBox_DropDownClosed_1" MinHeight="40" MaxHeight="400" Width="200" SelectedIndex="0" SelectionChanged="addContentComboBox_SelectionChanged_1">
+                <Button x:Name="shareBtn" Style="{StaticResource PeopleAppBarButtonStyle}" Tag="Share Timeline"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="shareBtn_Click_1"/>
+                <ComboBox x:Name="addContentComboBox" DropDownClosed="addContentComboBox_DropDownClosed_1" MinHeight="40" MaxHeight="400" Height="40"  Width="200" SelectedIndex="0" SelectionChanged="addContentComboBox_SelectionChanged_1">
                     <x:String>Add content</x:String>
                     <x:String>Picture(s)</x:String>
                     <x:String>Video</x:String>
