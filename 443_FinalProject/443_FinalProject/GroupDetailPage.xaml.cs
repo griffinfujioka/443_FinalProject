@@ -326,5 +326,43 @@ namespace _443_FinalProject
             else
                 eventCounter++;
         }
+
+        private void homeBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(GroupedItemsPage), "AllGroups"); 
+        }
+
+        private void privateRadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void publicRadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void submitTimelineButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            newTimelinePopup.IsOpen = false;
+            var timelineName = timelineNameTxtBox.Text;
+            var new_group = new SampleDataGroup(timelineName, timelineName, "", "", "");
+
+            App._sampleDataSource.AllGroups.Insert(0, new_group);
+            this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)new_group).UniqueId);
+        }
+
+        private void cancelTimelineButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            newTimelinePopup.IsOpen = false;
+        }
+
+        private void timelineNameTxtBox_KeyUp_1(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                submitTimelineButton_Click_1(sender, e);
+            }
+        }
     }
 }

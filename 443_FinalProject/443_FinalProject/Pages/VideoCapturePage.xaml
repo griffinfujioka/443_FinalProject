@@ -27,6 +27,32 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Popup x:Name="newTimelinePopup" Visibility="Visible" Height="300" Width="310" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" Closed="newTimelinePopup_Closed_1">
+            <Border BorderBrush="DarkGray" BorderThickness="10">
+
+                <StackPanel Orientation="Vertical" Background="White" Height="300" Width="310">
+                    <TextBlock Text="New timeline" FontFamily="Segoe UI" FontSize="16" Foreground="Black" Margin="10"/>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Name: " FontFamily="Segoe UI" FontSize="14" Foreground="Black" Margin="15,10,5,10"/>
+                        <TextBox x:Name="timelineNameTxtBox" Width="230" Height="30" Background="LightGray" Margin="10,5,5,5" KeyUp="timelineNameTxtBox_KeyUp_1"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Visibility: " FontFamily="Segoe UI" FontSize="14" Foreground="Black" Margin="15,10,5,10"/>
+                        <RadioButton x:Name="privateRadioButton" Checked="privateRadioButton_Checked_1" IsChecked="True" Content="Private" Foreground="Black" Background="White"/>
+                        <RadioButton x:Name="publicRadioButton" Checked="publicRadioButton_Checked_1" Content="Public" Foreground="Black" Background="White"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10,40,10,20">
+                        <Button x:Name="submitTimelineButton" Content="Ok" Click="submitTimelineButton_Click_1" Foreground="Black" Background="Gray" />
+                        <Button x:Name="cancelTimelineButton" Content="Cancel" Click="cancelTimelineButton_Click_1" Foreground="Black" Background="Gray" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </Popup>
+
         <!-- Video Metadata Popup -->
         <Popup x:Name="video_metadataPopup" Visibility="Visible" AllowDrop="False" HorizontalAlignment="Left" Margin="500,10,0,10" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
             <Grid Height="Auto" Width="400" Background="White">

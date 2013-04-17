@@ -91,17 +91,45 @@
             </ListView.Header>
         </ListView>
 
+        <Popup x:Name="newTimelinePopup" Visibility="Collapsed" Height="300" Width="310" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center">
+            <Border BorderBrush="DarkGray" BorderThickness="10">
+
+                <StackPanel Orientation="Vertical" Background="White" Height="300" Width="310">
+                    <TextBlock Text="New timeline" FontFamily="Segoe UI" FontSize="16" Foreground="Black" Margin="10"/>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Name: " FontFamily="Segoe UI" FontSize="14" Foreground="Black" Margin="15,10,5,10"/>
+                        <TextBox x:Name="timelineNameTxtBox" Width="230" Height="30" Background="LightGray" Margin="10,5,5,5" KeyUp="timelineNameTxtBox_KeyUp_1"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Visibility: " FontFamily="Segoe UI" FontSize="14" Foreground="Black" Margin="15,10,5,10"/>
+                        <RadioButton x:Name="privateRadioButton" Checked="privateRadioButton_Checked_1" IsChecked="True" Content="Private" Foreground="Black" Background="White"/>
+                        <RadioButton x:Name="publicRadioButton" Checked="publicRadioButton_Checked_1" Content="Public" Foreground="Black" Background="White"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10,40,10,20">
+                        <Button x:Name="submitTimelineButton" Content="Ok" Click="submitTimelineButton_Click_1" Foreground="Black" Background="Gray" />
+                        <Button x:Name="cancelTimelineButton" Content="Cancel" Click="cancelTimelineButton_Click_1" Foreground="Black" Background="Gray" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </Popup>
+
+
         <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width=".6*"/>
-                <ColumnDefinition Width=".4*"/>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" IsHitTestVisible="false" Margin="0,0,278,40"/>
+            <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" IsHitTestVisible="false" Margin="0,0,200,40"/>
             <StackPanel Orientation="Horizontal" Margin="40,20,40,20" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3">
-                <Button x:Name="shareBtn" Style="{StaticResource PeopleAppBarButtonStyle}" Tag="Share Timeline"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="shareBtn_Click_1"/>
+                
+                
                 <ComboBox x:Name="addContentComboBox" DropDownClosed="addContentComboBox_DropDownClosed_1" MinHeight="40" MaxHeight="400" Height="40"  Width="200" SelectedIndex="0" SelectionChanged="addContentComboBox_SelectionChanged_1">
                     <x:String>Add content</x:String>
                     <x:String>Picture(s)</x:String>
@@ -109,8 +137,9 @@
                     <x:String>Text</x:String>
                     
                 </ComboBox>
+                <Button x:Name="shareBtn" Style="{StaticResource PeopleAppBarButtonStyle}" Tag="Share Timeline"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="shareBtn_Click_1"/>
+                <Button x:Name="homeBtn" Style="{StaticResource HomeAppBarButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="homeBtn_Click_1"/>
 
-                
             </StackPanel>
         </Grid>
         

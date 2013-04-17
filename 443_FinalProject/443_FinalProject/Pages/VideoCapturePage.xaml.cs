@@ -73,6 +73,7 @@ namespace _443_FinalProject.Pages
         /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            App.currentGroup = null; 
             try
             {
                 // Open up the camera 
@@ -167,12 +168,10 @@ namespace _443_FinalProject.Pages
 
         private async void Add_Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (App.currentGroup == null)           //  The user didn't pick anything 
+            if (timelineComboBox.SelectedIndex == 0)
             {
-                // Add a new timeline
-                Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog("Please select a timeline.");
-                await dialog.ShowAsync();
-                return;
+                newTimelinePopup.IsOpen = true;
+                return; 
             }
 
             selectTimelinePopup.IsOpen = false;
@@ -190,6 +189,51 @@ namespace _443_FinalProject.Pages
         private void Cancel_Button_Click_1(object sender, RoutedEventArgs e)
         {
             selectTimelinePopup.IsOpen = false;
+        }
+
+        private void privateRadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void publicRadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void submitTimelineButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            newTimelinePopup.IsOpen = false;
+            var timelineName = timelineNameTxtBox.Text;
+            var new_group = new SampleDataGroup(timelineName, timelineName, "", "", "");
+
+            App._sampleDataSource.AllGroups.Insert(0, new_group);
+            this.Frame.Navigate(typeof(GroupDetailPage), ((SampleDataGroup)new_group).UniqueId);
+        }
+
+        private void cancelTimelineButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            newTimelinePopup.IsOpen = false;
+        }
+
+        private void timelineNameTxtBox_KeyUp_1(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                submitTimelineButton_Click_1(sender, e);
+            }
+        }
+
+        private void newTimelinePopup_Closed_1(object sender, object e)
+        {
+            selectTimelinePopup.IsOpen = false;
+            video_metadataPopup.IsOpen = false;
+            var videoTitle = titleTxtBox.Text;
+            var videoDescription = descriptionTxtBox.Text;
+            var newVideoItem = new SampleDataItem("", videoTitle, "", imageFile.Path, videoDescription, "", App.currentGroup);
+            App.currentGroup.Items.Add(newVideoItem);
+
+            this.Frame.Navigate(typeof(GroupDetailPage), App.currentGroup.UniqueId);
         }
     }
 }

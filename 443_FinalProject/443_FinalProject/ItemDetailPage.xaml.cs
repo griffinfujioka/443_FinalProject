@@ -68,5 +68,24 @@ namespace _443_FinalProject
             var selectedItem = (SampleDataItem)this.flipView.SelectedItem;
             pageState["SelectedItem"] = selectedItem.UniqueId;
         }
+
+        private async void deleteButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            var item = (SampleDataItem)this.flipView.SelectedItem;
+            var group = item.Group;
+            group.Items.Remove(item);
+
+            var output = string.Format(item.Title + " was deleted.");
+            Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog(output);
+            await dialog.ShowAsync();
+
+            if (this.Frame.CanGoBack)
+                GoBack(sender, e); 
+        }
+
+        private void homeBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(GroupedItemsPage), "AllGroups"); 
+        }
     }
 }

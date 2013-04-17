@@ -50,6 +50,7 @@ namespace _443_FinalProject
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
+            App.currentGroup = null; 
             var sampleDataGroups = SampleDataSource.GetGroups((String)navigationParameter);
             this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
@@ -200,6 +201,23 @@ namespace _443_FinalProject
                 var bmpimg = new BitmapImage();
                 bmpimg.SetSource(thumb);
                 videoImage = bmpimg;
+
+
+                if (App.currentGroup == null)       // We need the user to select which timeline to put the item in 
+                {
+                    selectTimelinePopup.IsOpen = true;
+                    // Add all of the available timelines to the combobox
+
+
+                    foreach (SampleDataGroup group in App._sampleDataSource.AllGroups)
+                    {
+                        timelineComboBox.Items.Insert(0, group.Title.ToString());
+                    }
+       
+                    timelineComboBox.SelectedIndex = 0;
+
+                    return;
+                }
 
                 var newVideoItem = new SampleDataItem("", videoFile.Name, "", imageFile.Path, "", "", App.currentGroup);
 

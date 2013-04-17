@@ -31,9 +31,14 @@
         d:DataContext="{Binding AllGroups[0], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="130"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="20,10,20,10">
+            <Button x:Name="deleteButton" Style="{StaticResource DiscardAppBarButtonStyle}" Click="deleteButton_Click_1"/>
+        </StackPanel>
 
         <!--
             The remainder of the page is one large FlipView that displays details for
@@ -144,9 +149,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" IsHitTestVisible="false"/>
+            <StackPanel Orientation="Horizontal" Margin="40,20,40,20" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3">
+
+
+               
+               
+                <Button x:Name="homeBtn" Style="{StaticResource HomeAppBarButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,20,0" Click="homeBtn_Click_1"/>
+
+            </StackPanel>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
