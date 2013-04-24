@@ -251,7 +251,7 @@ namespace _443_FinalProject
                 bmpimg.SetSource(thumb);
                 videoImage = bmpimg;
 
-                var newVideoItem = new SampleDataItem("", videoFile.Name, "", imageFile.Path, "", "", App.currentGroup);
+                var newVideoItem = new SampleDataItem(videoFile.Name, videoFile.Name, "", imageFile.Path, "", "", App.currentGroup);
 
                 App.currentGroup.Items.Add(newVideoItem);
 

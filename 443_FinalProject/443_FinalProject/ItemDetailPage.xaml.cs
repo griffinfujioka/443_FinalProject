@@ -72,6 +72,11 @@ namespace _443_FinalProject
         private async void deleteButton_Click_1(object sender, RoutedEventArgs e)
         {
             var item = (SampleDataItem)this.flipView.SelectedItem;
+            if (item == null)
+            {
+                return;
+            }
+
             var group = item.Group;
             group.Items.Remove(item);
 

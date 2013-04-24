@@ -231,6 +231,7 @@ namespace _443_FinalProject.Pages
             var videoTitle = titleTxtBox.Text;
             var videoDescription = descriptionTxtBox.Text;
             var newVideoItem = new SampleDataItem("", videoTitle, "", imageFile.Path, videoDescription, "", App.currentGroup);
+            // Bug here!
             App.currentGroup.Items.Add(newVideoItem);
 
             this.Frame.Navigate(typeof(GroupDetailPage), App.currentGroup.UniqueId);
